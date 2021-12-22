@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8049181650873464963}
   - component: {fileID: 5734793960137366868}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240b98ab7fc3d334f9c3f552dca6317c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _amount: 1
 --- !u!33 &2404956668801446196
 MeshFilter:
   m_ObjectHideFlags: 0
