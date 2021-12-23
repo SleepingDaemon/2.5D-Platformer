@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -12,15 +13,10 @@ public class Player : MonoBehaviour
     private float _yVelocity;
 
     private int _coins = 0;
+    private int _lives = 3;
     
     private CharacterController _controller = null;
     private Vector3 _movement;
-
-    public int Coins
-    {
-        get => _coins;
-        set => _coins = value;
-    }
 
     private void Awake()
     {
@@ -50,8 +46,8 @@ public class Player : MonoBehaviour
                 {
                     _yVelocity += _jumpHeight;
                 }
-                
-                _canDoubleJump = false;  
+
+                _canDoubleJump = false;
             }
 
             _yVelocity -= _gravity;
@@ -62,6 +58,11 @@ public class Player : MonoBehaviour
         _controller.Move(velocity * Time.deltaTime);
     }
 
+    private void Restart()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void AddCoin(int amount)
     {
         _coins += amount;
@@ -69,6 +70,16 @@ public class Player : MonoBehaviour
 
     public int GetCoinAmount()
     {
-        return Coins;
+        return _coins;
+    }
+
+    public int GetLivesAmount() => _lives;
+
+    public void Damage()
+    {
+        _lives--;
+
+        if (_lives < 1)
+            Restart();
     }
 }
