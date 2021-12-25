@@ -22,6 +22,10 @@ public class ElevatorPanel : MonoBehaviour
         _elevator = GameObject.Find("Elevator").GetComponent<Elevator>();
         if (_elevator == null)
             print("Elevator is null");
+
+        player = GameObject.Find("Player").GetComponent<Player>();
+        if (player == null)
+            print("Player is null");
     }
 
     private void Update()
@@ -42,7 +46,6 @@ public class ElevatorPanel : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            player = other.GetComponent<Player>();
             _canSwitch = true;
         }
     }
