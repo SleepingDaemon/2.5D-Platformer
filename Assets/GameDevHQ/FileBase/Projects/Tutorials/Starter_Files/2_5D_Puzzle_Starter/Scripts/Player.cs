@@ -5,25 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private float _speed = 5.0f;
+    [SerializeField] private float _gravity = 1.0f;
+    [SerializeField] private float _jumpHeight = 15.0f;
+    [SerializeField] private int _coins;
+    [SerializeField] private int _lives = 3;
+    [SerializeField] private float pushPower = 1.5f;
     private CharacterController _controller;
-    [SerializeField]
-    private float _speed = 5.0f;
-    [SerializeField]
-    private float _gravity = 1.0f;
-    [SerializeField]
-    private float _jumpHeight = 15.0f;
     private float _yVelocity;
     private bool _canDoubleJump = false;
-    [SerializeField]
-    private int _coins;
     private UIManager _uiManager;
-    [SerializeField]
-    private int _lives = 3;
     private Vector3 _direction;
     private Vector3 _velocity;
     private bool _canWallJump = false;
     private Vector3 _wallSurfaceNormal;
-    private ControllerColliderHit _hit;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +78,18 @@ public class Player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if(hit.transform.CompareTag("Moving Box"))
+        {
+            Rigidbody rigidbody = hit.transform.GetComponent<Rigidbody>();
+
+            if(rigidbody != null)
+            {
+                Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
+
+                rigidbody.velocity = pushDir * pushPower;
+            }
+        }
+
         if(!_controller.isGrounded && hit.collider.CompareTag("Wall"))
         {
             Debug.DrawRay(hit.point, hit.normal, Color.red);
